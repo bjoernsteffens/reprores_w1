@@ -15,17 +15,24 @@ steps <- read.csv("activity.csv")
 steps$date <- as.Date(steps$date,"%Y-%m-%d")
 
 #
+# Clean out the NAs
+steps <- steps[complete.cases(steps),]
+
+#
 # Get the number of steps per day and clean up column names
 stepsDay <- as.data.frame(tapply(steps$steps,steps$date,sum))
 stepsDay$Day <- row.names(stepsDay)
 colnames(stepsDay) <- c("Steps","Day")
 
+
 #
 # Plot the historgram of the step groups.
 png(filename = "reprores1a.png", width = 640, height = 640)
+par(mar=c(10,10,10,10))
 hist(stepsDay$Steps, 
-     xlab = "Total Number of Steps", 
-     ylab = "Days with Total Number of Steps", 
+     xlab = "Total Number of Steps in Groups
+     Example: 5 days with less than 5000 steps", 
+     ylab = "Days with Step Ranges", 
      main = "Number of Steps per Day in Groups",
      col = "lightblue")
 dev.off()
