@@ -56,7 +56,8 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 #dev.off()  
 ```
 
-![MyImages]("~/mycloud/Private_DataScience/Coursera/10 Data Science Specialisation/40 Reproducible Research/Assignments/week1/reprores1.png")
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1.png "Charting The Data")
+
  
 ```{r}
 summary(cars)
