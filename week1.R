@@ -21,8 +21,18 @@ stepsDay$Day <- row.names(stepsDay)
 colnames(stepsDay) <- c("Steps","Day")
 
 #
+# Plot the historgram of the step groups.
+png(filename = "reprores1a.png", width = 640, height = 640)
+hist(stepsDay$Steps, 
+     xlab = "Total Number of Steps", 
+     ylab = "Days with Total Number of Steps", 
+     main = "Number of Steps per Day in Groups",
+     col = "lightblue")
+dev.off()
+
+#
 # Plot it on the X axis, dont plot legend and turn the x-labels
-png(filename = "reprores1.png", width = 960, height = 640)
+png(filename = "reprores1b.png", width = 960, height = 640)
 g <- ggplot(stepsDay, aes(x=Day, y=Steps, fill = 20))
 g + geom_bar(stat = "Identity", alpha = 0.9) +
     theme(axis.text.x = element_text(angle = 90, hjust = 0)) +

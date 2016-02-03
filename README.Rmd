@@ -56,8 +56,20 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 #dev.off()  
 ```
 
-![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1.png "Charting The Data")
+#
+# Knitr does not seem to like this piece of code and prints a tiny blob. Github
+# seems fine though
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1a.png "Charting The Data")
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png "Charting The Data")
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 ```{r}
 summary(cars)
@@ -69,4 +81,4 @@ You can also embed plots, for example:
 plot(cars)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
