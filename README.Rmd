@@ -56,9 +56,10 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 #dev.off()  
 ```
 
-#
+<!---
 # Knitr does not seem to like this piece of code and prints a tiny blob. Github
 # seems fine though
+-->
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1a.png "Charting The Data")
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png "Charting The Data")
 
