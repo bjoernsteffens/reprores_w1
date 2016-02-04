@@ -23,14 +23,6 @@ When you click the **Knit** button a document will be generated that includes bo
 
 Looking at the available data there are missing values that are ignored for now. The code below shows 5 categories in which the days can be group into.
 
-1   Between 0 and 5000 steps
-2   Betweem 5001 and 9999 steps
-3   Between 10000 and 14999 steps
-4   Between 15000 and 20000 steps
-5   More then 20001 steps
-
-Below the graphs the media step value and mean value for steps per day are calculated.
-
 ```{r, echo=TRUE}
 #
 # Load the libraries we are going to use
@@ -56,7 +48,7 @@ colnames(stepsDay) <- c("Steps","Day")
 
 #
 # Plot the historgram of the step groups.
-png(filename = "reprores1a.png", width = 640, height = 640)
+#png(filename = "reprores1a.png", width = 640, height = 640)
 par(mar=c(10,10,10,10))
 hist(stepsDay$Steps, 
      xlab = "Total Number of Steps in Groups
@@ -64,11 +56,11 @@ hist(stepsDay$Steps,
      ylab = "Days with Step Ranges", 
      main = "Number of Steps per Day in Groups",
      col = "lightblue")
-dev.off()
+#dev.off()
 
 #
 # Plot it on the X axis, dont plot legend and turn the x-labels
-png(filename = "reprores1b.png", width = 960, height = 640)
+#png(filename = "reprores1b.png", width = 960, height = 640)
 g <- ggplot(stepsDay, aes(x=Day, y=Steps, fill = 20))
 g + geom_bar(stat = "Identity", alpha = 0.9) +
     theme(axis.text.x = element_text(angle = 90, hjust = 0)) +
@@ -86,38 +78,19 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
     ggtitle("Number of Steps Recorded per Day") +
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
-dev.off()   
+#dev.off()   
 ```
 
+
+The average number of steps taken per day is `r format(mean(stepsDay$Steps), digits=7, decimal.mark=".", big.mark=",",small.mark="", , small.interval=2)`. This does not factor in the weekday just an overall average of available data.
+
+The median for the steps is `r format(median(stepsDay$Steps), digits=5, big.mark=",",small.mark="")`. This means that half of the days had less steps than the median and the other half had more steps.
+
+
 <!---
-# Knitr does not seem to like this piece of code and prints a tiny blob. Github
+# Knitr does not seem to like this piece of code and prints a tiny blobs. Github
 # seems fine though
 -->
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1a.png)
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png)
-
-```{r, echo=TRUE}
-median(stepsDay$Steps)
-```
- 
-```{r, echo=TRUE}
-mean(stepsDay$Steps)
-```
- 
- 
- 
- 
- 
- 
- 
-```{r}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
 
