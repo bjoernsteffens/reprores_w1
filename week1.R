@@ -50,11 +50,43 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
     theme(plot.margin=unit(c(2,1,1.5,1.2),"cm")) +
     scale_y_continuous(labels = scales::comma) +
     theme(legend.position="none") +
-    xlab("Steps per Day
-         Missing values in \"empty\" days") +
+    xlab("Steps per Day") +
     theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
     ylab("Number of Recorded Step") + 
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
     ggtitle("Number of Steps Recorded per Day") +
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
 dev.off()   
+
+#
+# The mean and median values for the documentation
+median(stepsDay$Steps)
+mean(stepsDay$Steps)
+
+#
+# Add the mean and median values to the data.frame
+stepsDay$AvgSteps <- rep(mean(stepsDay$Steps),nrow(stepsDay))
+stepsDay$MedSteps <- rep(median(stepsDay$Steps),nrow(stepsDay))
+
+#
+# Plot that time series 
+png(filename = "reprores1c.png", width = 960, height = 640)
+g <- ggplot(stepsDay, aes(x=Day, y=AvgSteps, fill = 20))
+g + geom_bar(stat = "Identity", alpha = 0.9) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 0)) +
+    theme(panel.background = element_rect(fill = "lightblue")) +
+    theme(strip.background = element_rect(fill = "lightblue")) +
+    theme(panel.grid.minor = element_blank()) +
+    theme(panel.grid.major = element_line(colour = "grey95")) +
+    theme(plot.margin=unit(c(2,1,1.5,1.2),"cm")) +
+    scale_y_continuous(labels = scales::comma) +
+    theme(legend.position="none") +
+    xlab("Steps per Day") +
+    theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
+    ylab("Average Number of Steps") + 
+    theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
+    ggtitle("Average Number of Steps per Day") +
+    theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
+dev.off() 
+
+
