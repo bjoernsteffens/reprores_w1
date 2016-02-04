@@ -5,6 +5,12 @@ date: "3 February 2016"
 output: html_document
 ---
 
+<!---
+# Rmarkdown intro
+http://rmarkdown.rstudio.com
+http://rmarkdown.rstudio.com/authoring_basics.html
+--->
+
 ### *PLACE YOUR INTRO HERE*
 
 
@@ -14,6 +20,16 @@ MS Word documents. For more details on using R Markdown see <http://rmarkdown.rs
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ### Analysing Number of Steps per Day
+
+Looking at the available data there are missing values that are ignored for now. The code below shows 5 categories in which the days can be group into.
+
+1   Between 0 and 5000 steps
+2   Betweem 5001 and 9999 steps
+3   Between 10000 and 14999 steps
+4   Between 15000 and 20000 steps
+5   More then 20001 steps
+
+Below the graphs the media step value and mean value for steps per day are calculated.
 
 ```{r, echo=TRUE}
 #
@@ -77,11 +93,16 @@ dev.off()
 # Knitr does not seem to like this piece of code and prints a tiny blob. Github
 # seems fine though
 -->
-![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1a.png "Charting The Data")
-![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png "Charting The Data")
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1a.png)
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png)
 
+```{r, echo=TRUE}
+median(stepsDay$Steps)
+```
  
- 
+```{r, echo=TRUE}
+mean(stepsDay$Steps)
+```
  
  
  
