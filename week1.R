@@ -331,7 +331,7 @@ p1 <- g + geom_bar(stat = "Identity", aes(fill=Day)) +
     theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
     ylab("Average Number of Steps") + 
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
-    ggtitle("Average Number of Steps for Weekend Days Adjustmed for Missing Values") +
+    ggtitle("Average Number of Steps for Weekend Days Adjusted for Missing Values") +
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
 
 g <- ggplot(stepsOrigWKDays, aes(x=Day, y=Steps))
@@ -349,7 +349,7 @@ p2 <- g + geom_bar(stat = "Identity", aes(fill=Day)) +
     theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
     ylab("Average Number of Steps") + 
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
-    ggtitle("Average Number of Steps for Weekdays Adjustmed for Missing Values") +
+    ggtitle("Average Number of Steps for Weekdays Adjusted for Missing Values") +
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
 
 png(filename = "reprores1h.png", width = 960, height = 1440)
