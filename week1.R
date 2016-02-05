@@ -412,7 +412,7 @@ p2 <- g + geom_bar(stat = "Identity", alpha = 0.9) +
     theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
     ylab("Number of Steps per Interval") + 
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
-    ggtitle("Average Number of Weekend Steps per Interval") +
+    ggtitle("Average Number of Weekday Steps per Interval") +
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
 
 png(filename = "reprores1i.png", width = 1440, height = 960)
