@@ -1,8 +1,8 @@
 #
 # All of the code is documented in the
-# README.Rmd file. This file only contains
+# README.md and PA1_Template.Rmd file. This file only contains
 # the code, with remarks to which question
-# it belongs. Full "novel" in the Rmd file.
+# it belongs. Full "novel" in the md/Rmd file.
 #
 
 setwd("~/mycloud/Private_DataScience/Coursera/10 Data Science Specialisation/40 Reproducible Research/Assignments/week1")
