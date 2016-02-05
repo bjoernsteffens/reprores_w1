@@ -28,12 +28,18 @@ We will be using ggplot2 to plot data and read.csv to load the data during this 
 # Load the libraries we are going to use
 # and clean out any left-overs in the $env
 rm(list=ls())
+dev.off(dev.list())
 library(ggplot2)
+library(dplyr)
+library(grid)
+library(gridExtra)
 
 #
 # Read the csv file and transform the date string to a proper date
+# and the interval to a factor
 steps <- read.csv("activity.csv")
 steps$date <- as.Date(steps$date,"%Y-%m-%d")
+steps$interval <- as.factor(steps$interval)
 ```
 
 
@@ -53,6 +59,13 @@ steps <- steps[complete.cases(steps),]
 stepsDay <- as.data.frame(tapply(steps$steps,steps$date,sum))
 stepsDay$Day <- row.names(stepsDay)
 colnames(stepsDay) <- c("Steps","Day")
+
+#
+# Add the mean, median and WeekDay values to the data.frame
+stepsDay$AvgSteps <- rep(mean(stepsDay$Steps),nrow(stepsDay))
+stepsDay$MedSteps <- rep(median(stepsDay$Steps),nrow(stepsDay))
+stepsDay$WeekDay <- weekdays(as.Date(stepsDay$Day))
+
 #
 # Plot the historgram of the step groups.
 par(mar=c(10,10,10,10))
@@ -90,7 +103,7 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 
 ### 3. Mean and Median Number of Steps
 
-Rmarkdown displays the text blow fine ( Mean = 10,766.19, Median = 10,765). The Github Readme does however not understand this.
+Rmarkdown displays the text below fine ( Mean = 10,766.19, Median = 10,765). The Github Readme does however not understand this.
 
 The average number of steps taken per day is `r format(mean(stepsDay$Steps), digits=7, decimal.mark=".", big.mark=",",small.mark="", , small.interval=2)`. This does not factor in the weekday just an overall average of available data.
 
@@ -100,13 +113,10 @@ The median for the steps is `r format(median(stepsDay$Steps), digits=5, big.mark
 ### 4. Average Number of Steps per Day over Time
 
 
-To plot the average number of steps per day over time, we add that value and the median value to the stepsDay data frame. We do not need the median value now but adding it in case we would need it later.
+To plot the average number of steps per day over time, we add that value and the median value to the stepsDay data frame. We do not need the median value now but adding it in case we need it later. Lets add the weekday in there as well.
 
 
 ```{r, echo=TRUE}
-stepsDay$AvgSteps <- rep(mean(stepsDay$Steps),nrow(stepsDay))
-stepsDay$MedSteps <- rep(median(stepsDay$Steps),nrow(stepsDay))
-
 #
 # Plot that time series 
 g <- ggplot(stepsDay, aes(x=Day, y=AvgSteps, fill = 20))
@@ -149,8 +159,6 @@ stepsAvgInt$Interval <- factor(stepsAvgInt$Interval, levels = stepsAvgInt$Interv
 g <- ggplot(stepsAvgInt, aes(x=Interval, y=Steps, fill = 20))
 g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = "red") +
     theme(axis.text.x = element_text(angle = 90, hjust = 0)) +
-    #theme(axis.ticks.x = element_blank()) +
-    #theme(axis.ticks.length = 12) +
     theme(panel.background = element_rect(fill = "lightblue")) +
     theme(strip.background = element_rect(fill = "lightblue")) +
     theme(panel.grid.minor = element_blank()) +
@@ -208,6 +216,42 @@ g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = 
 
 We leave this insight for now establishing that the maximum average step intervals are approximately around 8:00am and 8:55am. Deeper analysis of the exact intervals to be explored later.
 
+
+We do however learn that simply taking the daily average across the entire data set will be a bad strategy. We also see that depening on what time during the day and also the day of week, we need to pay attention to the value we impute.
+
+Let's investigate that in more detail and see if we can learn what we need to pay attention to when developing and implementing our impute strategy
+
+```{r, echo=TRUE}
+#
+# Lets split the stuff out per day of week
+
+#
+# Average steps per weekday, day
+stepsAvgWday <- arrange(stepsDay %>% group_by(WeekDay,Day) %>% summarise(mean(Steps)),WeekDay,Day)
+colnames(stepsAvgWday) <- c("WeekDay","Day","Steps")
+#
+
+g <- ggplot(stepsAvgWday, aes(x=Day, y=Steps))
+p1 <- g + geom_bar(stat = "Identity", aes(fill=WeekDay)) +
+    facet_grid(.~WeekDay) 
+
+#
+# Compare this with the number of steps per interval and day
+steps$WeekDay <- weekdays(as.Date(steps$date))
+stepsAvgDayInt <- arrange(steps %>% group_by(WeekDay,interval) %>% summarise(mean(steps)),WeekDay,interval)
+colnames(stepsAvgDayInt) <- c("WeekDay","Interval","Steps")
+
+g <- ggplot(stepsAvgDayInt, aes(x=Interval, y=Steps))
+p2 <- g + geom_bar(stat = "Identity", aes(fill=WeekDay)) +
+    facet_grid(.~WeekDay) 
+
+grid.arrange(p1,p2, nrow = 2, ncol = 1)
+
+```
+
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1f.png)
+
+New information from these plots are that Fridays and Thursdays have higher average number of steps. We also see that during the night we have considerably less steps and may need to consider assigning a very low value between 12:00am and 06:00am for missing values.
 
 ### 6. Code to describe and show a strategy for imputing missing data
 

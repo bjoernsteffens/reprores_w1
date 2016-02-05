@@ -7,7 +7,11 @@ setwd("~/mycloud/Private_DataScience/Coursera/10 Data Science Specialisation/40 
 # Load the libraries we are going to use
 # and clean out any left-overs in the $env
 rm(list=ls())
+dev.off(dev.list())
 library(ggplot2)
+library(dplyr)
+library(grid)
+library(gridExtra)
 
 #
 # Read the csv file and transform the date string to a proper date
@@ -25,6 +29,12 @@ steps <- steps[complete.cases(steps),]
 stepsDay <- as.data.frame(tapply(steps$steps,steps$date,sum))
 stepsDay$Day <- row.names(stepsDay)
 colnames(stepsDay) <- c("Steps","Day")
+
+#
+# Add the mean, median and WeekDay values to the data.frame
+stepsDay$AvgSteps <- rep(mean(stepsDay$Steps),nrow(stepsDay))
+stepsDay$MedSteps <- rep(median(stepsDay$Steps),nrow(stepsDay))
+stepsDay$WeekDay <- weekdays(as.Date(stepsDay$Day))
 
 
 #
@@ -64,11 +74,6 @@ dev.off()
 # The mean and median values for the documentation
 median(stepsDay$Steps)
 mean(stepsDay$Steps)
-
-#
-# Add the mean and median values to the data.frame
-stepsDay$AvgSteps <- rep(mean(stepsDay$Steps),nrow(stepsDay))
-stepsDay$MedSteps <- rep(median(stepsDay$Steps),nrow(stepsDay))
 
 #
 # Plot that time series 
@@ -169,6 +174,30 @@ g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = 
     theme(plot.title = element_text(size = 20,margin = margin(0,0,30,0)))
 dev.off()
 
-#
-# Even though there are steps < 100 this is the interval with the highest number of steps
 
+#
+# Lets split the stuff out per day of week
+
+#
+# Average steps per weekday, day
+stepsAvgWday <- arrange(stepsDay %>% group_by(WeekDay,Day) %>% summarise(mean(Steps)),WeekDay,Day)
+colnames(stepsAvgWday) <- c("WeekDay","Day","Steps")
+#
+
+g <- ggplot(stepsAvgWday, aes(x=Day, y=Steps))
+p1 <- g + geom_bar(stat = "Identity", aes(fill=WeekDay)) +
+    facet_grid(.~WeekDay) 
+
+#
+# Compare this with the number of steps per interval and day
+steps$WeekDay <- weekdays(as.Date(steps$date))
+stepsAvgDayInt <- arrange(steps %>% group_by(WeekDay,interval) %>% summarise(mean(steps)),WeekDay,interval)
+colnames(stepsAvgDayInt) <- c("WeekDay","Interval","Steps")
+
+g <- ggplot(stepsAvgDayInt, aes(x=Interval, y=Steps))
+p2 <- g + geom_bar(stat = "Identity", aes(fill=WeekDay)) +
+    facet_grid(.~WeekDay) 
+
+#png(filename = "reprores1f.png", width = 960, height = 640)
+grid.arrange(p1,p2, nrow = 2, ncol = 1)
+#dev.off() 
