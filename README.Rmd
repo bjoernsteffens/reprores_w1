@@ -409,4 +409,4 @@ p2 <- g + geom_bar(stat = "Identity", aes(fill=Day)) +
 grid.arrange(p1,p2, nrow = 2, ncol = 1)
 ```
 
-![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1f.png)
+![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1h.png)
