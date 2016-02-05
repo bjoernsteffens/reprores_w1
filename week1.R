@@ -158,7 +158,7 @@ g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = 
     theme(plot.margin=unit(c(2,1,1.5,1.2),"cm")) +
     scale_y_continuous(labels = scales::comma) +
     theme(legend.position="none") +
-    xlab("Betwenn 800 and 855") +
+    xlab("Between 800 and 855") +
     #
     # ticks only at the full hour
     #scale_x_discrete(breaks=seq(0,2355,100)) +

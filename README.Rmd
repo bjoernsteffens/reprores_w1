@@ -19,11 +19,9 @@ MS Word documents. For more details on using R Markdown see <http://rmarkdown.rs
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-### Analysing Number of Steps per Day
+### 1. Preparing and Reading Data
 
-Looking at the available data there are missing values that are ignored for now. The code below shows 5 categories in which the days can be group into.
-
-Note: Plots do not contain any missing values. They have all been filtered out prior to the plot command.
+We will be using ggplot2 to plot data and read.csv to load the data during this exercise.
 
 ```{r, echo=TRUE}
 #
@@ -36,7 +34,16 @@ library(ggplot2)
 # Read the csv file and transform the date string to a proper date
 steps <- read.csv("activity.csv")
 steps$date <- as.Date(steps$date,"%Y-%m-%d")
+```
 
+
+### 2. Analysing Number of Steps per Day
+
+Looking at the available data there are missing values that are ignored for now. The code below shows 5 categories in which the days can be group into.
+
+Note: Plots do not contain any missing values. They have all been filtered out prior to the plot command.
+
+```{r, echo=TRUE}
 #
 # Clean out the NAs
 steps <- steps[complete.cases(steps),]
@@ -81,6 +88,7 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png)
 
+### 3. Mean and Median Number of Steps
 
 Rmarkdown displays the text blow fine ( Mean = 10,766.19, Median = 10,765). The Github Readme does however not understand this.
 
@@ -89,7 +97,7 @@ The average number of steps taken per day is `r format(mean(stepsDay$Steps), dig
 The median for the steps is `r format(median(stepsDay$Steps), digits=5, big.mark=",",small.mark="")`. This means that half of the days had less steps than the median and the other half had more steps.
 
 
-### Average Number of Steps per Day over Time
+### 4. Average Number of Steps per Day over Time
 
 
 To plot the average number of steps per day over time, we add that value and the median value to the stepsDay data frame. We do not need the median value now but adding it in case we would need it later.
@@ -122,7 +130,7 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1c.png)
 
 
-### The 5-minute interval that, on average, contains the maximum number of steps
+### 5. The 5-minute interval that, on average, contains the maximum number of steps
 
 If we take the average of the steps in each interval across the entire data set we see that the interval in between ~800 and ~900 in the morning seems a likely candidate for the most active period during the day.
 
@@ -185,10 +193,9 @@ g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = 
     theme(plot.margin=unit(c(2,1,1.5,1.2),"cm")) +
     scale_y_continuous(labels = scales::comma) +
     theme(legend.position="none") +
-    xlab("Betwenn 800 and 855") +
+    xlab("Between 800 and 855") +
     #
     # ticks only at the full hour
-    #scale_x_discrete(breaks=seq(0,2355,100)) +
     theme(axis.text.x = element_text(size=10,margin = margin(0,0,20,0))) +
     ylab("Number of Steps per Interval") + 
     theme(axis.text.y = element_text(size=10,margin = margin(0,0,0,10))) +
@@ -202,8 +209,8 @@ g + geom_bar(stat = "Identity", alpha = 0.9) + geom_hline(yintercept=100, col = 
 We leave this insight for now establishing that the maximum average step intervals are approximately around 8:00am and 8:55am. Deeper analysis of the exact intervals to be explored later.
 
 
-### 6 Code to describe and show a strategy for imputing missing data
+### 6. Code to describe and show a strategy for imputing missing data
 
-### 7 Histogram of the total number of steps taken each day after missing values are imputed
+### 7. Histogram of the total number of steps taken each day after missing values are imputed
 
-### 8 Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+### 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
