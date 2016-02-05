@@ -11,15 +11,50 @@ http://rmarkdown.rstudio.com
 http://rmarkdown.rstudio.com/authoring_basics.html
 --->
 
-### *PLACE YOUR INTRO HERE*
+## Introduction
+
+It is now possible to collect a large amount of data about personal
+movement using activity monitoring devices such as a
+[Fitbit](http://www.fitbit.com), [Nike
+Fuelband](http://www.nike.com/us/en_us/c/nikeplus-fuelband), or
+[Jawbone Up](https://jawbone.com/up). These type of devices are part of
+the "quantified self" movement -- a group of enthusiasts who take
+measurements about themselves regularly to improve their health, to
+find patterns in their behavior, or because they are tech geeks. But
+these data remain under-utilized both because the raw data are hard to
+obtain and there is a lack of statistical methods and software for
+processing and interpreting the data.
+
+This assignment makes use of data from a personal activity monitoring
+device. This device collects data at 5 minute intervals through out the
+day. The data consists of two months of data from an anonymous
+individual collected during the months of October and November, 2012
+and include the number of steps taken in 5 minute intervals each day.
+
+## Data
+
+The data for this assignment can be downloaded from the course web
+site:
+
+* Dataset: [Activity monitoring data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip) [52K]
+
+The variables included in this dataset are:
+
+* **steps**: Number of steps taking in a 5-minute interval (missing
+    values are coded as `NA`)
+
+* **date**: The date on which the measurement was taken in YYYY-MM-DD
+    format
+
+* **interval**: Identifier for the 5-minute interval in which
+    measurement was taken
+
+The dataset is stored in a comma-separated-value (CSV) file and there
+are a total of 17,568 observations in this
+dataset.
 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and
-MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-### 1. Preparing and Reading Data
+## 1. Preparing and Reading Data
 
 We will be using ggplot2 to plot data and read.csv to load the data during this exercise.
 
@@ -44,7 +79,7 @@ steps$interval <- as.factor(steps$interval)
 ```
 
 
-### 2. Analysing Number of Steps per Day
+## 2. Analysing Number of Steps per Day
 
 Looking at the available data there are missing values that are ignored for now. The code below shows 5 categories in which the days can be group into.
 
@@ -102,7 +137,8 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1b.png)
 
-### 3. Mean and Median Number of Steps
+
+## 3. Mean and Median Number of Steps
 
 Rmarkdown displays the text below fine ( Mean = 10,766.19, Median = 10,765). The Github Readme does however not understand this.
 
@@ -111,8 +147,7 @@ The average number of steps taken per day is `r format(mean(stepsDay$Steps), dig
 The median for the steps is `r format(median(stepsDay$Steps), digits=5, big.mark=",",small.mark="")`. This means that half of the days had less steps than the median and the other half had more steps.
 
 
-### 4. Average Number of Steps per Day over Time
-
+## 4. Average Number of Steps per Day over Time
 
 To plot the average number of steps per day over time, we add that value and the median value to the stepsDay data frame. We do not need the median value now but adding it in case we need it later. Lets add the weekday in there as well.
 
@@ -141,7 +176,7 @@ g + geom_bar(stat = "Identity", alpha = 0.9) +
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1c.png)
 
 
-### 5. The 5-minute interval that, on average, contains the maximum number of steps
+## 5. The 5-minute interval that, on average, contains the maximum number of steps
 
 If we take the average of the steps in each interval across the entire data set we see that the interval in between ~800 and ~900 in the morning seems a likely candidate for the most active period during the day.
 
@@ -251,7 +286,8 @@ grid.arrange(p1,p2, nrow = 2, ncol = 1, top = "Daily Steps Profile vs Interval S
 
 New information from these plots are that Fridays and Thursdays have higher average number of steps. We also see that during the night we have considerably less steps and may need to consider assigning a very low value between 12:00am and 06:00am for missing values.
 
-### 6. Code to describe and show a strategy for imputing missing data
+
+## 6. Code to describe and show a strategy for imputing missing data
 
 Note: This paragraph answers question 7 as well.
 
@@ -353,7 +389,7 @@ grid.arrange(p1,p2, nrow = 2, ncol = 1)
 ![alt text](https://github.com/bjoernsteffens/reprores_w1/blob/master/reprores1f.png)
 
 
-### 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+## 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 Using the adjusted data set and adding the weekday and plotting one chart per Saturday and Sundday and one for the days Monday through Friday.
 
