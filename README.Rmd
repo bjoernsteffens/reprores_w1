@@ -534,4 +534,4 @@ p2 <- g + geom_bar(stat = "Identity", alpha = 0.9) +
 grid.arrange(p1,p2, nrow = 2, ncol = 1)
 ```
 
-![Panel Plot](reprores1h.png)
+![Panel Plot](reprores1i.png)
