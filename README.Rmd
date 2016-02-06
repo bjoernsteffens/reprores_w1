@@ -1,7 +1,7 @@
 ---
 title: "Quantified Self Movement Analysis"
 author: "Bjoern W. Steffens"
-date: "4 February 2016"
+date: "6 February 2016"
 output: html_document
 ---
 
@@ -534,3 +534,4 @@ p2 <- g + geom_bar(stat = "Identity", alpha = 0.9) +
 grid.arrange(p1,p2, nrow = 2, ncol = 1)
 ```
 
+![Panel Plot](reprores1h.png)
